@@ -27,6 +27,7 @@ Supported resource type
 - TILESET   tileset type resource, contains tiles data which can be used / shared for TILEMAP and MAP resources.
 - TILEMAP   tilemap type resource, contains raw tilemap data. It can be used to draw an image or complete (but small) plane background.
 - MAP       map type resource, optimized to draw large map / level.
+- OBJECTS   list of object data structures, extracted from Tiled map file
 - IMAGE     image type resource, internally contains Palette, Tileset and Tilemap data. It can be used to draw an image or complete (but small)
             plane background.
 - SPRITE    sprite type resource, used to handle sprites with the SGDK Sprite engine.
@@ -257,7 +258,7 @@ Here's the accepted SGDK type(s) for each 'Tiled' type:
 As you can see, you can also use your own enumerations in which case you need to save them as number instead (not string) and make
 sure they perfectly match your C enums (be careful about the allocated type size for your enum, default is u32 with GCC).
 
-The Tiled objects has some default attributes: 'id', 'type', 'name', 'x' and 'y' that you can use:
+The Tiled objects has some default attributes: 'id', 'type', 'name', 'x', 'y', 'width' and 'height' that you can use:
 - 'id' is used internally by rescomp and Tiled and not exported as field, but you can define your own custom 'id' field if you want.
 - 'type' is only used as type filter (see the optional 'type_filter' parameter below) and not exported as field but you can define
   your own custom 'type' field (as an integer) if needed.
@@ -265,6 +266,7 @@ The Tiled objects has some default attributes: 'id', 'type', 'name', 'x' and 'y'
   To enable export of that field you need to add a custom boolean 'exportName' field and set its value to 'true'.
 - 'x' and 'y' define the object position on the map and can be exported in any number format.
   To enable export of these fields, you need to add a custom boolean 'exportPosition' field and set its value to 'true'.
+- 'width' and 'height' are exported similarly to 'x' and 'y', if there is a custom boolean 'exportDimensions' field set to 'true'.
   
 Syntax:
 OBJECTS name tmx_file layer_id field_defs [decl_type [type_filter]]

@@ -58,6 +58,8 @@ public class TMX
     static final String ATTR_CLASS = "class";
     static final String ATTR_X = "x";
     static final String ATTR_Y = "y";
+    static final String ATTR_W = "width";
+    static final String ATTR_H = "height";
     static final String ATTR_PROPERTYTYPE = "propertytype";
     static final String ATTR_VALUE = "value";
 
@@ -68,6 +70,7 @@ public class TMX
     static final String ATTR_VALUE_CLASS = "class";
     static final String ATTR_VALUE_EXPORT_NAME = "exportname";
     static final String ATTR_VALUE_EXPORT_POSITION = "exportposition";
+    static final String ATTR_VALUE_EXPORT_DIMENSIONS = "exportdimensions";
     static final String ATTR_VALUE_EXPORT_TILE_INDEX = "exporttileindex";
 
     // keep it lower case
@@ -759,6 +762,8 @@ public class TMX
                 final int id = XMLUtil.getAttributeIntValue(objectElement, ATTR_ID, 0);
                 final double x = XMLUtil.getAttributeDoubleValue(objectElement, ATTR_X, 0d);
                 final double y = XMLUtil.getAttributeDoubleValue(objectElement, ATTR_Y, 0d);
+                final double width = XMLUtil.getAttributeDoubleValue(objectElement, ATTR_W, 0d);
+                final double height = XMLUtil.getAttributeDoubleValue(objectElement, ATTR_H, 0d);
                 final String objectName = getAttribute(objectElement, ATTR_NAME, "object_" + id);
 
                 // get all properties
@@ -788,6 +793,16 @@ public class TMX
                         {
                             addField(objectName, tFields, new TField(ATTR_X, TiledObjectType.FLOAT, Double.toString(x)));
                             addField(objectName, tFields, new TField(ATTR_Y, TiledObjectType.FLOAT, Double.toString(y)));
+                        }
+                    }
+                    // export dimensions field ?
+                    else if (StringUtil.equals(name, ATTR_VALUE_EXPORT_DIMENSIONS))
+                    {
+                        // set to true ? --> add 'x' and 'y' fields
+                        if (StringUtil.equals(value.toLowerCase(), "true"))
+                        {
+                            addField(objectName, tFields, new TField(ATTR_W, TiledObjectType.FLOAT, Double.toString(width)));
+                            addField(objectName, tFields, new TField(ATTR_H, TiledObjectType.FLOAT, Double.toString(height)));
                         }
                     }
                     // export tile index field ?
